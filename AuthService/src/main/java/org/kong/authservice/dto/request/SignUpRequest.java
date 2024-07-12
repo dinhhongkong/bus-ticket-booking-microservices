@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserRequest {
+@AllArgsConstructor
+public class SignUpRequest {
     private String username;
     private String password;
 }

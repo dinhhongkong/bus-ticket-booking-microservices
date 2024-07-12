@@ -11,9 +11,11 @@ spring:
     #    generate-ddl: true
     show-sql: true
 
-  mvc:
-    servlet:
-      path: /api/v1/auth
+
+
+app:
+  jwt-secret: 357638792F423F4428472B4B6250655368566D597133743677397A2443264629
+  jwt-expiration-milliseconds: 604800000
 
 
 server:
