@@ -7,10 +7,7 @@ import org.kong.authservice.dto.response.TokenResponse;
 import org.kong.authservice.service.UserAccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,10 +28,6 @@ public class CustomerController {
         userAccountService.registerUser(signUpRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-//
-//    public ResponseEntity<?> updateInfo() {
-//
-//    }
 //
 //    public ResponseEntity<?> changePassword {
 //

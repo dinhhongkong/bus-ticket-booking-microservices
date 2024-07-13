@@ -33,11 +33,11 @@ public class User implements UserDetails {
     @Basic
     @Column(name = "enable")
     private boolean enable;
-    @OneToOne(mappedBy = "userByUserId")
+    @OneToOne(mappedBy = "userByUserId", fetch = FetchType.LAZY)
     private Customer customersByUserId;
-    @OneToOne(mappedBy = "userByUserId")
+    @OneToOne(mappedBy = "userByUserId",fetch = FetchType.LAZY)
     private Driver driversByUserId;
-    @OneToOne(mappedBy = "userByUserId")
+    @OneToOne(mappedBy = "userByUserId", fetch = FetchType.LAZY)
     private Employee employeesByUserId;
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "role_id", nullable = false, insertable = false, updatable = false)

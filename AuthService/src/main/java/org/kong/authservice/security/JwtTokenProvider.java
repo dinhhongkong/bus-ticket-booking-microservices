@@ -1,9 +1,6 @@
 package org.kong.authservice.security;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +11,8 @@ import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.Date;
 import java.util.Map;
+import java.util.function.Function;
+
 @Slf4j
 @Component
 public class JwtTokenProvider {
@@ -31,6 +30,8 @@ public class JwtTokenProvider {
                 .signWith(getSignKey())
                 .compact();
     }
+
+
 
     public boolean validateToken(final String authToken) {
 
@@ -50,6 +51,25 @@ public class JwtTokenProvider {
         }
         return false;
     }
+
+    public String extractUsername(String token) {
+        return extractClaim(token, claims -> claims.get("username", String.class));
+    }
+
+
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token) {
+        return Jwts.parser()
+                .verifyWith((SecretKey) getSignKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    }
+
 
 
     private Key getSignKey() {
