@@ -19,7 +19,6 @@ public class CustomerController {
     public ResponseEntity<?> login(@RequestBody UserLoginRequest userLoginRequest){
         TokenResponse tokenResponse = userAccountService.performLogin(userLoginRequest);
         return new ResponseEntity<>(tokenResponse, HttpStatus.OK);
-
     }
 
 

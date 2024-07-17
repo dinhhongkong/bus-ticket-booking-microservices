@@ -35,7 +35,6 @@ public class SpringSecurityConfig {
                                     "/api/v1/auth/register").permitAll()
                                     .anyRequest().authenticated();
                         }
-
                 )
                 .authenticationProvider(authenticationProvider())
                 .exceptionHandling(exception -> exception
