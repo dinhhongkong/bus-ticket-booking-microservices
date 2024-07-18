@@ -18,10 +18,10 @@ public class Office {
     private Integer id;
 
     @Column(name = "office_name")
-    private Integer officeName;
+    private String officeName;
 
     @Column(name = "address")
-    private Integer address;
+    private String address;
 
     @Column(name = "type")
     private Integer type;

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -18,7 +19,10 @@ public class Price {
     private Integer id;
 
     @Column(name = "date_start")
-    private Integer dateStart;
+    private LocalDate dateStart;
+
+    @Column(name = "price")
+    private Double price;
 
     @OneToMany(mappedBy = "price")
     private Set<Trip> trips = new LinkedHashSet<>();
