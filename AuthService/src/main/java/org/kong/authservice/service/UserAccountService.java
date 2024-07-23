@@ -13,4 +13,5 @@ public interface UserAccountService  {
     boolean updatePasswordUsingOldPassword(ChangePassRequest changePassRequest);
     boolean updatePasswordUsingOTP(ChangePassRequest changePassRequest);
     boolean registerCustomer(SignUpRequest signUpRequest);
+    void validateToken(String token);
 }

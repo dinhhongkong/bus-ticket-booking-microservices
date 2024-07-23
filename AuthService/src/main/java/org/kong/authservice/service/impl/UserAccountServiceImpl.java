@@ -1,5 +1,7 @@
 package org.kong.authservice.service.impl;
 
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.JwtException;
 import lombok.AllArgsConstructor;
 import org.kong.authservice.dto.request.ChangePassRequest;
 import org.kong.authservice.dto.request.SignUpRequest;
@@ -85,5 +87,13 @@ public class UserAccountServiceImpl implements UserAccountService {
     @Override
     public boolean registerCustomer(SignUpRequest signUpRequest) {
         return false;
+    }
+
+    @Override
+    public void validateToken(String token) {
+        if (jwtTokenProvider.validateToken(token)) {
+            return;
+        }
+        throw new JwtException("Token is valid");
     }
 }

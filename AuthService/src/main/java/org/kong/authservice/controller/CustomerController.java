@@ -27,6 +27,14 @@ public class CustomerController {
         userAccountService.registerUser(signUpRequest);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @GetMapping("/validate-token/{token}")
+    public ResponseEntity<?> validate(@PathVariable String token) {
+        userAccountService.validateToken(token);
+        return new ResponseEntity<>("OK",HttpStatus.OK);
+    }
+
+
 //
 //    public ResponseEntity<?> changePassword {
 //
