@@ -22,6 +22,7 @@ public class CustomerServiceImpl implements CustomerService {
         Optional<User> user = userRepository.findByUsername(username);
         Map<String, Object> claims = new HashMap<>();
         claims.put("customerId", user.get().getUserId());
+        claims.put("username", user.get().getUsername());
         return jwtTokenProvider.createToken(claims);
     }
 }
