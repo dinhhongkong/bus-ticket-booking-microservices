@@ -1,29 +1,30 @@
 package org.kong.bookingservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.kong.bookingservice.dto.SeatDto;
+import org.kong.bookingservice.config.OfficeType;
+import org.kong.bookingservice.config.SeatConfig;
+import org.kong.bookingservice.dto.response.TripDetailsDto;
 import org.kong.bookingservice.dto.response.TripSearchDto;
-import org.kong.bookingservice.entity.Journey;
-import org.kong.bookingservice.entity.JourneyDetail;
-import org.kong.bookingservice.entity.Seat;
-import org.kong.bookingservice.entity.Trip;
-import org.kong.bookingservice.mapper.SeatMapper;
-import org.kong.bookingservice.repository.SeatRepository;
+import org.kong.bookingservice.entity.*;
+import org.kong.bookingservice.exception.ResourceNotFound;
+import org.kong.bookingservice.repository.TicketDetailRepository;
 import org.kong.bookingservice.repository.TripRepository;
 import org.kong.bookingservice.service.TripService;
+import org.kong.bookingservice.utils.LocalTimeUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class TripServiceImpl implements TripService {
     private final TripRepository tripRepository;
-    private final SeatRepository seatRepository;
-    private final SeatMapper seatMapper;
+    private final TicketDetailRepository ticketDetailRepository;
 
     @Override
     public List<TripSearchDto> getSearchTrip(int departureProvinceId, int destinationProvinceId, String date) {
@@ -51,14 +52,33 @@ public class TripServiceImpl implements TripService {
                 }
             }
 
+            BusType busType = trip.getBus().getType();
+            int orderSeat =  ticketDetailRepository.countSeatOrder(trip.getId());
+            int emptySeat = 0;
+
+            if (busType.getId() == SeatConfig.SLEEPING_ID) {
+                emptySeat = SeatConfig.SLEEPING_SEAT - orderSeat;
+
+            }
+            else if (busType.getId() == SeatConfig.LIMOUSINE_ID) {
+                emptySeat = SeatConfig.LIMOUSINE_SEAT - orderSeat;
+            }
+
+
             if (start!= null && end!=null) {
                 if (start.getDeltaTime().isBefore( end.getDeltaTime() )) {
+                    LocalTime startTime = trip.getJourney().getDepartureTime();
+                    String travelTime = trip.getJourney().getTravelTime();
+                    LocalTime endTime = LocalTimeUtils.plusStringAndLocalTime(travelTime,startTime);
                     tripSearch.add(new TripSearchDto(
                             trip.getId(),
                             trip.getDepartureDay(),
                             trip.getPrice().getPrice(),
-                            trip.getJourney().getDepartureTime(),
-                            trip.getJourney().getTravelTime(),
+                            startTime,
+                            travelTime,
+                            endTime,
+                            trip.getBus().getType().getTypeName(),
+                            emptySeat,
                             provinceStart,
                             provinceEnd
                     ));
@@ -69,9 +89,44 @@ public class TripServiceImpl implements TripService {
         return tripSearch;
     }
 
+
+
     @Override
-    public List<SeatDto> getDisableSeatInTrip(int tripId) {
-        List<Seat> seats = seatRepository.getDisableSeats(tripId, false);
-        return seatMapper.toDto(seats);
+    public TripDetailsDto getDetailsTrip(int id) {
+        Optional<Trip> trip = tripRepository.findById(id);
+        if (trip.isPresent()) {
+            Journey journey =  trip.get().getJourney();
+            String startProvince ="";
+            String endProvince = "";
+            List<String> disableSeat = new ArrayList<>();
+            for (JourneyDetail item: journey.getJourneyDetails()) {
+                if(item.getType() == OfficeType.DEPARTURE) {
+                    startProvince = item.getOffice().getProvince().getProvinceName();
+                }
+                else if ( item.getType() == OfficeType.DESTINATION) {
+                    endProvince =  item.getOffice().getProvince().getProvinceName();
+                }
+            }
+
+
+            for (Ticket ticket: trip.get().getTickets()) {
+                for (TicketDetail ticketDetail: ticket.getTicketDetails()) {
+                    String seatName = ticketDetail.getSeatName();
+                    disableSeat.add(seatName);
+                }
+            }
+
+            return new TripDetailsDto(
+                    trip.get().getId(),
+                    trip.get().getDepartureDay(),
+                    trip.get().getPrice().getPrice(),
+                    journey.getDepartureTime(),
+                    trip.get().getBus().getType().getTypeName(),
+                    startProvince,
+                    endProvince,
+                    disableSeat
+                    );
+        }
+        throw  new ResourceNotFound("Not found trip");
     }
 }

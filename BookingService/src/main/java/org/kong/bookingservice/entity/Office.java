@@ -23,9 +23,6 @@ public class Office {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "type")
-    private Integer type;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "province_id")
     private Province province;

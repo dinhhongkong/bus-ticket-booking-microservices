@@ -19,6 +19,9 @@ public class JourneyDetail {
     @Column(name = "delta_time")
     private LocalTime deltaTime;
 
+    @Column(name = "type")
+    private Integer type;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "journey_id")
     private Journey journey;

@@ -27,7 +27,4 @@ public class BusType {
     @OneToMany(mappedBy = "type")
     private Set<Bus> buses = new LinkedHashSet<>();
 
-    @OneToMany(mappedBy = "busType")
-    private Set<Seat> seats = new LinkedHashSet<>();
-
 }

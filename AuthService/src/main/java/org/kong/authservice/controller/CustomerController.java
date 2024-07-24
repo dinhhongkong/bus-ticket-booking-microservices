@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
+@CrossOrigin
 public class CustomerController {
 
     private final UserAccountService userAccountService;
@@ -31,6 +32,7 @@ public class CustomerController {
     @GetMapping("/validate-token/{token}")
     public ResponseEntity<?> validate(@PathVariable String token) {
         userAccountService.validateToken(token);
+        System.out.println("validate ne");
         return new ResponseEntity<>("OK",HttpStatus.OK);
     }
 

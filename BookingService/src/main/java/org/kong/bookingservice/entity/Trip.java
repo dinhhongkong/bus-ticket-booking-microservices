@@ -34,4 +34,8 @@ public class Trip {
     @OneToMany(mappedBy = "trip")
     private Set<Ticket> tickets = new LinkedHashSet<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bus_id")
+    private Bus bus;
+
 }

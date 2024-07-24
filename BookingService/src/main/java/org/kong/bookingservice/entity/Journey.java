@@ -22,7 +22,7 @@ public class Journey {
     private LocalTime departureTime;
 
     @Column(name = "travel_time")
-    private LocalTime travelTime;
+    private String travelTime;
 
     @Column(name = "status")
     private Integer status;
