@@ -32,7 +32,6 @@ public class CustomerController {
     @GetMapping("/validate-token/{token}")
     public ResponseEntity<?> validate(@PathVariable String token) {
         userAccountService.validateToken(token);
-        System.out.println("validate ne");
         return new ResponseEntity<>("OK",HttpStatus.OK);
     }
 

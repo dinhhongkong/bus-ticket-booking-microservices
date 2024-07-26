@@ -2,6 +2,7 @@ package org.kong.bookingservice.dto.response;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;
+import org.kong.bookingservice.dto.JourneyDetailDto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,4 +20,6 @@ public class TripDetailsDto implements Serializable {
     String departureProvince;
     String destProvince;
     List<String> disableSeat;
+    List<JourneyDetailDto> pickup;
+    List<JourneyDetailDto> dropOff;
 }

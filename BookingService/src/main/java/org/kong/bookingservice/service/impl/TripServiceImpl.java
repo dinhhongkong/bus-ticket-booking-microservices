@@ -3,10 +3,12 @@ package org.kong.bookingservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.kong.bookingservice.config.OfficeType;
 import org.kong.bookingservice.config.SeatConfig;
+import org.kong.bookingservice.dto.JourneyDetailDto;
 import org.kong.bookingservice.dto.response.TripDetailsDto;
 import org.kong.bookingservice.dto.response.TripSearchDto;
 import org.kong.bookingservice.entity.*;
 import org.kong.bookingservice.exception.ResourceNotFound;
+import org.kong.bookingservice.mapper.JourneyDetailMapper;
 import org.kong.bookingservice.repository.TicketDetailRepository;
 import org.kong.bookingservice.repository.TripRepository;
 import org.kong.bookingservice.service.TripService;
@@ -25,6 +27,7 @@ import java.util.Set;
 public class TripServiceImpl implements TripService {
     private final TripRepository tripRepository;
     private final TicketDetailRepository ticketDetailRepository;
+    private final JourneyDetailMapper journeyDetailMapper;
 
     @Override
     public List<TripSearchDto> getSearchTrip(int departureProvinceId, int destinationProvinceId, String date) {
@@ -99,12 +102,29 @@ public class TripServiceImpl implements TripService {
             String startProvince ="";
             String endProvince = "";
             List<String> disableSeat = new ArrayList<>();
+            List<JourneyDetailDto> pickup = new ArrayList<>();
+            List<JourneyDetailDto> dropOff = new ArrayList<>();
             for (JourneyDetail item: journey.getJourneyDetails()) {
                 if(item.getType() == OfficeType.DEPARTURE) {
                     startProvince = item.getOffice().getProvince().getProvinceName();
+                    item.setDeltaTime(journey.getDepartureTime());
+                    pickup.add(journeyDetailMapper.toDto(item));
                 }
                 else if ( item.getType() == OfficeType.DESTINATION) {
                     endProvince =  item.getOffice().getProvince().getProvinceName();
+                    LocalTime localTime = LocalTimeUtils.plusStringAndLocalTime(journey.getTravelTime(), journey.getDepartureTime());
+                    item.setDeltaTime(localTime);
+                    dropOff.add(journeyDetailMapper.toDto(item));
+                }
+                else if (item.getType() == OfficeType.TRANSFER) {
+                    LocalTime localTime = LocalTimeUtils.minusLocalTimes( journey.getDepartureTime(), item.getDeltaTime());
+                    item.setDeltaTime(localTime);
+                    pickup.add(journeyDetailMapper.toDto(item));
+                }
+                else if (item.getType() == OfficeType.STOP_STATION) {
+                    LocalTime localTime = LocalTimeUtils.plusLocalTimes(journey.getDepartureTime(), item.getDeltaTime());
+                    item.setDeltaTime(localTime);
+                    pickup.add(journeyDetailMapper.toDto(item));
                 }
             }
 
@@ -124,7 +144,9 @@ public class TripServiceImpl implements TripService {
                     trip.get().getBus().getType().getTypeName(),
                     startProvince,
                     endProvince,
-                    disableSeat
+                    disableSeat,
+                    pickup,
+                    dropOff
                     );
         }
         throw  new ResourceNotFound("Not found trip");
