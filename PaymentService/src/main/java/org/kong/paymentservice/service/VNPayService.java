@@ -24,7 +24,7 @@ public class VNPayService {
         String vnp_Command = "pay";
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
         String vnp_IpAddr = "127.0.0.1";
-        String vnp_TmnCode = VNPayConfig.vnp_TmnCode;
+        String vnp_TmnCode = VNPayConfig.getTmnCode();
         String orderType = "order-type";
 
         Map<String, String> vnp_Params = new HashMap<>();
@@ -78,9 +78,8 @@ public class VNPayService {
             }
         }
         String queryUrl = query.toString();
-        System.out.println("bi mat" + VNPayConfig.vnp_HashSecret);
-        System.out.println("bi mat code" + VNPayConfig.vnp_TmnCode);
-        String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.vnp_HashSecret, hashData.toString());
+
+        String vnp_SecureHash = VNPayConfig.hmacSHA512(VNPayConfig.getHashSecret(), hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = VNPayConfig.vnp_PayUrl + "?" + queryUrl;
         return paymentUrl;
@@ -109,10 +108,12 @@ public class VNPayService {
                 invoiceService.completeBooking(invoiceId);
                 return 1;
             } else {
+                System.out.println("false ne");
                 invoiceService.bookingFailed(invoiceId);
                 return 0;
             }
         } else {
+            System.out.println("false ne");
             invoiceService.bookingFailed(invoiceId);
             return -1;
         }

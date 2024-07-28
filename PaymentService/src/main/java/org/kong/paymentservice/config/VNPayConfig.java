@@ -16,13 +16,27 @@ import java.util.*;
 public class VNPayConfig {
     public static final String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static final String vnp_Returnurl = "/vnpay-payment";
+    private static String vnp_TmnCode;
+    private static String vnp_HashSecret;
+    public static final String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 
     @Value("${vnpay.tnnCode}")
-    public static String vnp_TmnCode;
+    private void setTmnCode(String value){
+        vnp_TmnCode = value;
+    }
 
     @Value("${vnpay.hashSecret}")
-    public static String vnp_HashSecret;
-    public static final String vnp_apiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
+    private void setHashSecret(String value){
+        vnp_HashSecret = value;
+    }
+
+    public static String getTmnCode() {
+        return vnp_TmnCode;
+    }
+
+    public static String getHashSecret() {
+        return vnp_HashSecret;
+    }
 
     public static String md5(String message) {
         String digest = null;

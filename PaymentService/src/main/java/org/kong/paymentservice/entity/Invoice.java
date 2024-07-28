@@ -1,6 +1,7 @@
 package org.kong.paymentservice.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,7 +31,7 @@ public class Invoice {
     private Byte status;
 
     @Column(name = "user_id")
-    private Integer userId;
+    private String userId;
 
     @OneToMany(mappedBy = "invoice")
     private Set<PaymentStatus> paymentStatuses = new LinkedHashSet<>();

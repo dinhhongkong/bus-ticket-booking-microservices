@@ -65,7 +65,9 @@ public class InvoiceServiceImpl implements InvoiceService {
         // create invoice
         Invoice invoice = new Invoice();
         invoice.setCreationDate(LocalDateTime.now());
-        invoice.setUserId(request.getUserId());
+        if (request.getUserId() != null) {
+            invoice.setUserId(request.getUserId().toString());
+        }
         invoice.setPaymentMethod(request.getPaymentMethod());
         invoice.setStatus(PaymentStatusCode.BOOKING);
         invoice = invoiceRepository.save(invoice);
