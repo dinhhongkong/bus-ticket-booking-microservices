@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot") version "3.3.1"
     id("io.spring.dependency-management") version "1.1.5"
 }
+val springCloudVersion by extra("2023.0.3")
 
 group = "org.kong"
 version = "0.0.1-SNAPSHOT"
@@ -33,6 +34,7 @@ dependencies {
 
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
     implementation("io.jsonwebtoken:jjwt-api:0.12.6")
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
     runtimeOnly("io.jsonwebtoken:jjwt-impl:0.12.6")
     // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
@@ -50,6 +52,11 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+dependencyManagement {
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+    }
 }
 
 tasks.withType<Test> {
