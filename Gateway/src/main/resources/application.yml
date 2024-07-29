@@ -1,0 +1,50 @@
+server:
+  port: 8080
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedHeaders: "*"
+            allowedMethods: "*"
+      routes:
+        - id: auth-service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/auth/**
+
+        - id: booking-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/booking/**
+
+        - id: management-service
+          uri: http://localhost:8083
+          predicates:
+            - Path=/management/**
+          filters:
+            - AuthenticationFilter
+
+        - id: payment-service
+          uri: http://localhost:8084
+          predicates:
+            - Path=/payment/**
+
+        - id: reporting-service
+          uri: http://localhost:8085
+          predicates:
+            - Path=/reporting
+          filters:
+            - AuthenticationFilter
