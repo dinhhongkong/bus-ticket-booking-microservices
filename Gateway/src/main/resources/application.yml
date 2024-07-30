@@ -33,7 +33,7 @@ spring:
         - id: management-service
           uri: http://localhost:8083
           predicates:
-            - Path=/management/**
+            - Path=/manage/**
           filters:
             - AuthenticationFilter
 
