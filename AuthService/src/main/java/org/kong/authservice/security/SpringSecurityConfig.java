@@ -30,9 +30,9 @@ public class SpringSecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((requests) -> {
-                            requests.requestMatchers("/api/v1/auth/login",
-                                            "/api/v1/auth/register",
-                                            "/api/v1/auth/validate-token/**")
+                            requests.requestMatchers("/auth/login",
+                                            "/auth/register",
+                                            "/auth/validate-token/**")
                                     .permitAll()
                                     .anyRequest().authenticated();
                         }
