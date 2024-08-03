@@ -4,6 +4,8 @@ import org.kong.managementservice.dto.OfficeDto;
 import org.kong.managementservice.entity.Office;
 import org.mapstruct.*;
 
+import java.util.List;
+
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface OfficeMapper {
     @Mapping(source = "provinceName", target = "province.provinceName")
@@ -12,6 +14,8 @@ public interface OfficeMapper {
 
     @InheritInverseConfiguration(name = "toEntity")
     OfficeDto toDto(Office office);
+
+    List<OfficeDto> toDto(List<Office> office);
 
     @InheritConfiguration(name = "toEntity")
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)

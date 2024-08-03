@@ -32,7 +32,8 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests((requests) -> {
                             requests.requestMatchers("/auth/login",
                                             "/auth/register",
-                                            "/auth/validate-token/**")
+                                            "/auth/validate-token/**",
+                                            "/auth/admin/**")
                                     .permitAll()
                                     .anyRequest().authenticated();
                         }

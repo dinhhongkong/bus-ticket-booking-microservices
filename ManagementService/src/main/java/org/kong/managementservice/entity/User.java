@@ -27,12 +27,10 @@ public class User {
     @Column(name = "password", nullable = false, length = 100)
     private String password;
 
-    @NotNull
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @NotNull
     @Column(name = "enable", nullable = false)
     private Boolean enable = false;
 
