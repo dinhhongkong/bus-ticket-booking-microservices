@@ -11,7 +11,7 @@ import java.util.Date;
 @RestControllerAdvice
 public class CustomExceptionHandler {
 
-    @ExceptionHandler(ResourceNotFound.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<?> resourceNotFound(Exception exception, WebRequest request) {
         return new ResponseEntity<>(new ErrorDetails(new Date(), exception.getMessage(), request.getDescription(false)), HttpStatus.BAD_REQUEST);
     }

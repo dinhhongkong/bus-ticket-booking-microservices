@@ -12,5 +12,9 @@ import java.time.LocalTime;
 public class JourneyDetailDto implements Serializable {
     Integer id;
     LocalTime deltaTime;
+    Integer officeId;
+    String officeName;
+    String officeAddress;
+    String province;
     Integer type;
 }

@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import org.kong.managementservice.dto.BusDto;
 import org.kong.managementservice.entity.Bus;
 import org.kong.managementservice.entity.BusType;
+import org.kong.managementservice.exception.ResourceNotFoundException;
 import org.kong.managementservice.mapper.BusMapper;
 import org.kong.managementservice.repository.BusRepository;
 import org.kong.managementservice.repository.BusTypeRepository;
 import org.kong.managementservice.service.BusService;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

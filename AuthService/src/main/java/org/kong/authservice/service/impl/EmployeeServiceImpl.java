@@ -42,7 +42,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (!passwordEncoder.matches(userLoginRequest.getPassword(), user.get().getPassword())) {
             throw new BadCredentialsException("Incorrect password");
         }
+        if (user.get().getRoleByRoleId().getRoleName().equals("CUSTOMER")) {
+            throw new BadCredentialsException("Unauthorized");
+        }
         Map<String, Object> claims = new HashMap<>();
+        claims.put("username", user.get().getUsername());
         claims.put("employeeId", user.get().getEmployeesByUserId().getEmployeeId());
         claims.put("name", user.get().getEmployeesByUserId().getFullName());
         claims.put("role", user.get().getRoleByRoleId().getRoleName());

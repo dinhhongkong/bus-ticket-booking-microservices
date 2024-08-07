@@ -4,14 +4,9 @@ import org.kong.managementservice.dto.JourneyDto;
 import org.kong.managementservice.entity.Journey;
 import org.mapstruct.*;
 
-@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING, uses = {JourneyDetailMapper.class})
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface JourneyMapper {
     Journey toEntity(JourneyDto journeyDto);
-
-    @AfterMapping
-    default void linkJourneyDetails(@MappingTarget Journey journey) {
-        journey.getJourneyDetails().forEach(journeyDetail -> journeyDetail.setJourney(journey));
-    }
 
     JourneyDto toDto(Journey journey);
 

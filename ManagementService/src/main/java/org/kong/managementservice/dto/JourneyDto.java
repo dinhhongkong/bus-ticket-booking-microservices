@@ -5,7 +5,7 @@ import lombok.Value;
 
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.Set;
+import java.util.List;
 
 /**
  * DTO for {@link org.kong.managementservice.entity.Journey}
@@ -17,5 +17,8 @@ public class JourneyDto implements Serializable {
     @Size(max = 10)
     String travelTime;
     Integer status;
-    Set<JourneyDetailDto> journeyDetails;
+    JourneyDetailDto departureOffice;
+    JourneyDetailDto destinationOffice;
+    List<JourneyDetailDto> transferOffice;
+    List<JourneyDetailDto> stopStation;
 }

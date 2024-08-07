@@ -5,12 +5,12 @@ import org.kong.managementservice.dto.EmployeeDto;
 import org.kong.managementservice.dto.request.UserDtoUpdate;
 import org.kong.managementservice.entity.Employee;
 import org.kong.managementservice.entity.User;
+import org.kong.managementservice.exception.ResourceNotFoundException;
 import org.kong.managementservice.mapper.EmployeeMapper;
 import org.kong.managementservice.mapper.UserUpdateMapper;
 import org.kong.managementservice.repository.EmployeeRepository;
 import org.kong.managementservice.repository.UserRepository;
 import org.kong.managementservice.service.EmployeeService;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

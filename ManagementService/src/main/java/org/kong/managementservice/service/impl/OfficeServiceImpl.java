@@ -4,11 +4,11 @@ import lombok.AllArgsConstructor;
 import org.kong.managementservice.dto.OfficeDto;
 import org.kong.managementservice.entity.Office;
 import org.kong.managementservice.entity.Province;
+import org.kong.managementservice.exception.ResourceNotFoundException;
 import org.kong.managementservice.mapper.OfficeMapper;
 import org.kong.managementservice.repository.OfficeRepository;
 import org.kong.managementservice.repository.ProvinceRepository;
 import org.kong.managementservice.service.OfficeService;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
