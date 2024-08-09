@@ -2,9 +2,12 @@ package org.kong.authservice.service.impl;
 
 import io.jsonwebtoken.JwtException;
 import lombok.AllArgsConstructor;
+import org.kong.authservice.dto.EmployeeAccountDto;
 import org.kong.authservice.dto.request.UserLoginRequest;
 import org.kong.authservice.dto.response.TokenResponse;
+import org.kong.authservice.entity.Employee;
 import org.kong.authservice.entity.User;
+import org.kong.authservice.repository.EmployeeRepository;
 import org.kong.authservice.repository.UserRepository;
 import org.kong.authservice.security.JwtTokenProvider;
 import org.kong.authservice.service.EmployeeService;
@@ -12,6 +15,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +28,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private JwtTokenProvider jwtTokenProvider;
     private UserRepository userRepository;
     private PasswordEncoder passwordEncoder;
+    private EmployeeRepository employeeRepository;
 
     @Override
     public void validateToken(String token) {
@@ -54,5 +59,28 @@ public class EmployeeServiceImpl implements EmployeeService {
         return TokenResponse.builder()
                 .accessToken(accessToken)
                 .build();
+    }
+
+    @Override
+    @Transactional
+    public void creatAccount(EmployeeAccountDto accountDto) {
+        Employee employee = employeeRepository.findById(accountDto.getEmployeeId())
+                .orElseThrow(()-> new RuntimeException("Not found"));
+
+        User user = userRepository.findByEmployeeId(accountDto.getEmployeeId());
+        if (user == null) {
+            user = new User();
+        }
+        user.setUsername(accountDto.getUsername());
+        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        user.setRoleId(accountDto.getRoleId());
+        user.setEnable(accountDto.isEnable());
+        user = userRepository.save(user);
+
+
+        if (employee.getUserId() == null) {
+            employee.setUserId(user.getUserId());
+            employeeRepository.save(employee);
+        }
     }
 }

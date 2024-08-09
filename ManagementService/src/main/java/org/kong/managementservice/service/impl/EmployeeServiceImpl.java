@@ -2,6 +2,7 @@ package org.kong.managementservice.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.kong.managementservice.dto.EmployeeDto;
+import org.kong.managementservice.dto.UserDto;
 import org.kong.managementservice.dto.request.UserDtoUpdate;
 import org.kong.managementservice.entity.Employee;
 import org.kong.managementservice.entity.User;
@@ -14,6 +15,7 @@ import org.kong.managementservice.service.EmployeeService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,21 +24,52 @@ import java.util.Optional;
 @Transactional
 public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
-    private UserRepository userRepository;
     private EmployeeMapper employeeMapper;
-    private UserUpdateMapper userUpdateMapper;
 
     @Override
     public List<EmployeeDto> getAllEmployee() {
         List<Employee> employees =  employeeRepository.findAll();
-        return employeeMapper.toDto(employees);
+        List<EmployeeDto> employeeDtos = new ArrayList<>();
+        for (Employee employee: employees) {
+            UserDto user = null;
+            Integer id = null;
+            String fullName = null;
+            String cccd = null;
+            String phoneNumber = null;
+            String email = null;
+            String gender = null;
+            String address = null;
+
+            if ( employee.getUser()!= null) {
+                if (employee.getUser().getRole() != null) {
+                    User userEntity = employee.getUser();
+                    user = new UserDto(
+                            userEntity.getId(),
+                            userEntity.getRole().getId(),
+                            userEntity.getRole().getRoleName(),
+                            userEntity.getEnable()
+                    );
+                }
+
+            }
+
+
+            id = employee.getId();
+            fullName = employee.getFullName();
+            cccd = employee.getCccd();
+            phoneNumber = employee.getPhoneNumber();
+            email = employee.getEmail();
+            gender = employee.getGender();
+            address = employee.getAddress();
+            EmployeeDto employeeDto = new EmployeeDto( id, fullName, cccd, phoneNumber, email, gender, address, user );
+            employeeDtos.add(employeeDto);
+        }
+        return employeeDtos;
     }
 
     @Override
     public EmployeeDto addNewEmployee(EmployeeDto employeeDto) {
-        User user = userRepository.save(new User());
         Employee employee = employeeMapper.toEntity(employeeDto);
-        employee.setUser(user);
         employee = employeeRepository.save(employee);
         return employeeMapper.toDto(employee);
     }
@@ -47,7 +80,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employee.isPresent()) {
             Employee existingEmployee = employee.get();
             Employee newEmployee = employeeMapper.partialUpdate(employeeDto,existingEmployee);
-            employeeRepository.save(newEmployee);
+            newEmployee = employeeRepository.save(newEmployee);
+            return employeeMapper.toDto(newEmployee);
         }
 
         throw new ResourceNotFoundException("employee not found with id " + id);
@@ -58,24 +92,4 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.deleteById(id);
     }
 
-    @Override
-    public void createAccountEmployee(UserDtoUpdate userDto) {
-        Optional<User> user = userRepository.findById(userDto.getId());
-        if (user.isPresent()) {
-            User existingUser = user.get();
-            User newUser = userUpdateMapper.partialUpdate(userDto,existingUser);
-            newUser.setEnable(true);
-            userRepository.save(newUser);
-        }
-        else {
-            throw new ResourceNotFoundException("User not found");
-        }
-
-
-    }
-
-    @Override
-    public void setActiveAccount(UserDtoUpdate user) {
-
-    }
 }

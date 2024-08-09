@@ -1,6 +1,7 @@
 package org.kong.authservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.kong.authservice.dto.EmployeeAccountDto;
 import org.kong.authservice.dto.request.SignUpRequest;
 import org.kong.authservice.dto.request.UserLoginRequest;
 import org.kong.authservice.dto.response.TokenResponse;
@@ -26,5 +27,11 @@ public class AdminController {
     public ResponseEntity<?> validate(@PathVariable String token) {
         employeeService.validateToken(token);
         return new ResponseEntity<>("OK",HttpStatus.OK);
+    }
+
+    @PostMapping("/admin/account")
+    public ResponseEntity<?> createAccount(@RequestBody EmployeeAccountDto employeeAccountDto){
+        employeeService.creatAccount(employeeAccountDto);
+        return new ResponseEntity<>("OKE", HttpStatus.CREATED);
     }
 }

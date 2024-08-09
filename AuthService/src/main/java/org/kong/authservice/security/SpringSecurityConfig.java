@@ -33,8 +33,11 @@ public class SpringSecurityConfig {
                             requests.requestMatchers("/auth/login",
                                             "/auth/register",
                                             "/auth/validate-token/**",
-                                            "/auth/admin/**")
+                                            "/auth/admin/**",
+                                            "/auth/admin/validate-token/**")
                                     .permitAll()
+                                    .requestMatchers("/auth/admin/account")
+                                    .hasRole("ADMIN")
                                     .anyRequest().authenticated();
                         }
                 )

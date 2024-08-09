@@ -2,6 +2,7 @@ package org.kong.managementservice.controller;
 
 import lombok.AllArgsConstructor;
 import org.kong.managementservice.dto.BusDto;
+import org.kong.managementservice.dto.JourneyDto;
 import org.kong.managementservice.service.BusService;
 import org.kong.managementservice.service.JourneyService;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,15 @@ public class JourneyController {
         return ResponseEntity.ok(journeyService.getAllJourney());
     }
 
+    @GetMapping("/journey/{id}")
+    public ResponseEntity<?> getJourneybyId(@PathVariable int id) {
+        return ResponseEntity.ok(journeyService.getJourneyById(id));
+    }
+
     @PostMapping("/journey")
-    public ResponseEntity<?> addBus(@RequestBody BusDto busDto) {
-        System.out.println(busDto.getLicensePlates());
+    public ResponseEntity<?> addBus(@RequestBody JourneyDto journeyDto) {
+        System.out.println(journeyDto);
+        journeyService.addNewJourney(journeyDto);
         return ResponseEntity.ok("");
     }
 
@@ -30,7 +37,7 @@ public class JourneyController {
     }
     @DeleteMapping("/journey/{id}")
     public ResponseEntity<?> deleteBus(@PathVariable int id) {
-
+        journeyService.deleteJourneyById(id);
         return ResponseEntity.ok("");
     }
 }

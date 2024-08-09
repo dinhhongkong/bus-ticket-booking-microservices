@@ -21,4 +21,18 @@ public class JourneyDto implements Serializable {
     JourneyDetailDto destinationOffice;
     List<JourneyDetailDto> transferOffice;
     List<JourneyDetailDto> stopStation;
+
+    @Override
+    public String toString() {
+        return "JourneyDto{" +
+                "id=" + id +
+                ", departureTime=" + departureTime +
+                ", travelTime='" + travelTime + '\'' +
+                ", status=" + status +
+                ", departureOffice=" + departureOffice +
+                ", destinationOffice=" + destinationOffice +
+                ", transferOffice=" + transferOffice +
+                ", stopStation=" + stopStation +
+                '}';
+    }
 }

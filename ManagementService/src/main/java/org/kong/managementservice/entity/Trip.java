@@ -38,4 +38,8 @@ public class Trip {
     @OneToMany(mappedBy = "trip")
     private Set<Ticket> tickets = new LinkedHashSet<>();
 
+    @OneToMany(mappedBy = "trip")
+    private Set<DriverDetail> driverDetails = new LinkedHashSet<>();
+
+
 }

@@ -15,6 +15,7 @@ public class JourneyDetailDto implements Serializable {
     Integer officeId;
     String officeName;
     String officeAddress;
-    String province;
+    Integer provinceId;
+    String provinceName;
     Integer type;
 }

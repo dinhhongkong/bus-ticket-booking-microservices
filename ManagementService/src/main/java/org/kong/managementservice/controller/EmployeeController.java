@@ -34,11 +34,6 @@ public class EmployeeController {
         return ResponseEntity.accepted().build();
     }
 
-    @PostMapping("/employee/account")
-    public ResponseEntity<?> updateAccount(@RequestBody UserDtoUpdate userDtoUpdate) {
-        System.out.println("in ra: " + userDtoUpdate.getId() + userDtoUpdate.getUsername());
-        employeeService.createAccountEmployee(userDtoUpdate);
-        return ResponseEntity.ok("Success");
-    }
+
 
 }

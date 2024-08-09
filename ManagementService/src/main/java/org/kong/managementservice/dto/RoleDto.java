@@ -7,12 +7,12 @@ import lombok.Value;
 import java.io.Serializable;
 
 /**
- * DTO for {@link org.kong.managementservice.entity.User}
+ * DTO for {@link org.kong.managementservice.entity.Role}
  */
 @Value
-public class UserDto implements Serializable {
+public class RoleDto implements Serializable {
     Integer id;
-    Integer roleId;
+    @NotNull
+    @Size(max = 10)
     String roleName;
-    Boolean enable;
 }

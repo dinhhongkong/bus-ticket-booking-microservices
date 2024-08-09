@@ -6,7 +6,8 @@ import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface JourneyDetailMapper {
-    @Mapping(source = "province", target = "office.province.provinceName")
+    @Mapping(source = "provinceName", target = "office.province.provinceName")
+    @Mapping(source = "provinceId", target = "office.province.id")
     @Mapping(source = "officeAddress", target = "office.address")
     @Mapping(source = "officeName", target = "office.officeName")
     @Mapping(source = "officeId", target = "office.id")

@@ -14,8 +14,5 @@ public interface EmployeeService {
 
     void deleteEmployeeById(int id);
 
-    void createAccountEmployee(UserDtoUpdate user);
-
-    void setActiveAccount(UserDtoUpdate user);
 
 }
