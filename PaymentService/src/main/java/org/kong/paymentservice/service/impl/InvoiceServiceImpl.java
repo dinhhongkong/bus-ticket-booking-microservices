@@ -79,10 +79,10 @@ public class InvoiceServiceImpl implements InvoiceService {
         paymentStatus.setInvoice(invoice);
         paymentStatusRepository.save(paymentStatus);
 
-        createTicket(request.getTrip(),invoice, request.getTrip().getId() , request.getName(), request.getPhoneNumber(), request.getName());
+        createTicket(request.getTrip(),invoice, request.getTrip().getId() , request.getName(), request.getPhoneNumber(), request.getEmail());
 
         if (request.getReturnTrip()!= null) {
-            Ticket ticketReturn = createTicket(request.getReturnTrip(),invoice,request.getReturnTrip().getId(), request.getName(), request.getPhoneNumber(), request.getName() );
+            Ticket ticketReturn = createTicket(request.getReturnTrip(),invoice,request.getReturnTrip().getId(), request.getName(), request.getPhoneNumber(), request.getEmail() );
             invoice.getTickets().add(ticketReturn);
             ticketDetailRepository.saveAll(ticketReturn.getTicketDetails());
         }
