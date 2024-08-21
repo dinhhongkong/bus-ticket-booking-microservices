@@ -19,9 +19,10 @@ public class DriverController {
         return ResponseEntity.ok(driverService.getAllDriver());
     }
 
+
+
     @PostMapping("/driver")
     public ResponseEntity<?> addBus(@RequestBody DriverDto driverDto) {
-
         return ResponseEntity.ok( driverService.addNewDriver(driverDto));
     }
 
