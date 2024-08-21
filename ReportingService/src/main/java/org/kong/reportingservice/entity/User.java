@@ -44,4 +44,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private Set<Invoice> invoices = new LinkedHashSet<>();
 
+    @OneToOne(mappedBy = "user")
+    private Customer customer;
+
 }

@@ -6,6 +6,6 @@ import lombok.Value;
 public class TotalDataResponse {
     Integer totalTrip;
     Integer totalTickets;
-    Integer totalIncome;
+    Double totalIncome;
     Integer totalCustomer;
 }
