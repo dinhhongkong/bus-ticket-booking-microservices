@@ -26,8 +26,8 @@ public class Invoice {
     @Column(name = "payment_method", length = 30)
     private String paymentMethod;
 
-    @Column(name = "is_cancelled")
-    private Boolean isCancelled;
+    @Column(name = "status")
+    private Integer status;
 
     @OneToMany(mappedBy = "invoice")
     private Set<PaymentStatus> paymentStatuses = new LinkedHashSet<>();

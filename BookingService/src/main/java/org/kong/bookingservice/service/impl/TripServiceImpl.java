@@ -130,10 +130,13 @@ public class TripServiceImpl implements TripService {
 
 
             for (Ticket ticket: trip.get().getTickets()) {
-                for (TicketDetail ticketDetail: ticket.getTicketDetails()) {
-                    String seatName = ticketDetail.getSeatName();
-                    disableSeat.add(seatName);
+                if(ticket.getInvoice().getStatus() == 1) {
+                    for (TicketDetail ticketDetail: ticket.getTicketDetails()) {
+                        String seatName = ticketDetail.getSeatName();
+                        disableSeat.add(seatName);
+                    }
                 }
+
             }
 
             return new TripDetailsDto(
