@@ -20,8 +20,8 @@ public class Invoice {
     @Column(name = "invoice_id", nullable = false)
     private Integer id;
 
-    @Column(name = "creation_date")
-    private LocalDateTime creationDate;
+    @Column(name = "date")
+    private LocalDateTime date;
 
     @Size(max = 30)
     @Column(name = "payment_method", length = 30)

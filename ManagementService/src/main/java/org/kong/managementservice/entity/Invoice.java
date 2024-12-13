@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -19,8 +20,8 @@ public class Invoice {
     @Column(name = "invoice_id", nullable = false)
     private Integer id;
 
-    @Column(name = "creation_date")
-    private Instant creationDate;
+    @Column(name = "date")
+    private LocalDateTime date;
 
     @Size(max = 30)
     @Column(name = "payment_method", length = 30)

@@ -48,3 +48,8 @@ spring:
             - Path=/report/**
           filters:
             - AuthenticationFilter
+
+        - id: chatbot-service
+          uri: http://localhost:8086
+          predicates:
+            - Path=/ai/**

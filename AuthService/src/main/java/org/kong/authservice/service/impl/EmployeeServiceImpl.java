@@ -50,9 +50,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (user.get().getRoleByRoleId().getRoleName().equals("CUSTOMER")) {
             throw new BadCredentialsException("Unauthorized");
         }
+        if (!user.get().isEnable()) {
+            throw new BadCredentialsException("Account is disabled");
+        }
         Map<String, Object> claims = new HashMap<>();
         claims.put("username", user.get().getUsername());
-        claims.put("employeeId", user.get().getEmployeesByUserId().getEmployeeId());
+        claims.put("userId", user.get().getUserId());
         claims.put("name", user.get().getEmployeesByUserId().getFullName());
         claims.put("role", user.get().getRoleByRoleId().getRoleName());
         String accessToken = jwtTokenProvider.createToken(claims);

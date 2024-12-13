@@ -1,11 +1,13 @@
 package org.kong.paymentservice.service;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.kong.paymentservice.config.VNPayConfig;
-import org.kong.paymentservice.dto.request.PaymentTripRequest;
+import org.kong.paymentservice.dto.request.PaymentRequest;
+import org.kong.paymentservice.entity.TicketInformation;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -16,10 +18,13 @@ import java.util.*;
 @RequiredArgsConstructor
 public class VNPayService {
 
-    private final InvoiceService invoiceService;
-    public String createOrder( String urlReturn, PaymentTripRequest body){
-        String orderInfo = invoiceService.reservation(body);
-        int total = body.getAmount();
+    private final BookingService bookingService;
+
+
+    @Transactional
+    public String createOrder(String urlReturn, PaymentRequest body){
+        bookingService.choosePaymentMethod(body);
+        int total = body.getTotal();
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String vnp_TxnRef = VNPayConfig.getRandomNumber(8);
@@ -35,7 +40,7 @@ public class VNPayService {
         vnp_Params.put("vnp_CurrCode", "VND");
 
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-        vnp_Params.put("vnp_OrderInfo", orderInfo);
+        vnp_Params.put("vnp_OrderInfo", "invoice id " + body.getInvoiceId());
         vnp_Params.put("vnp_OrderType", orderType);
 
         String locate = "vn";
@@ -105,16 +110,17 @@ public class VNPayService {
         if (signValue.equals(vnp_SecureHash)) {
             if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
 
-                invoiceService.completeBooking(invoiceId);
+                bookingService.completeBooking(invoiceId);
+
                 return 1;
             } else {
                 System.out.println("false ne");
-                invoiceService.bookingFailed(invoiceId);
+                bookingService.bookingFailed(invoiceId);
                 return 0;
             }
         } else {
             System.out.println("false ne");
-            invoiceService.bookingFailed(invoiceId);
+            bookingService.bookingFailed(invoiceId);
             return -1;
         }
     }

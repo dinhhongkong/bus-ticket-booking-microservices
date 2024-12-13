@@ -63,7 +63,7 @@ public class ECommerceServiceImpl implements ECommerceService {
         List<Double> responseSleepingBed = new ArrayList<>(Collections.nCopies(12, 0.0));
         List<Invoice> invoiceSleepingBed = invoiceRepository.findInvoiceByDayAndType(startOfYear, endOfYear, PaymentStatusCode.SUCCESS, BusTypeCode.SLEEPING_BED);
         for (Invoice invoice : invoiceSleepingBed) {
-            int month = invoice.getCreationDate().getMonth().getValue();
+            int month = invoice.getDate().getMonth().getValue();
             int index = month -1;
 
             Set<Ticket> ticketSet = invoice.getTickets();
@@ -78,7 +78,7 @@ public class ECommerceServiceImpl implements ECommerceService {
         List<Double> responseLimousine = new ArrayList<>(Collections.nCopies(12, 0.0));
         List<Invoice> invoiceLimousine = invoiceRepository.findInvoiceByDayAndType(startOfYear, endOfYear, PaymentStatusCode.SUCCESS, BusTypeCode.LIMOUSINE);
         for (Invoice invoice : invoiceLimousine) {
-            int month = invoice.getCreationDate().getMonth().getValue();
+            int month = invoice.getDate().getMonth().getValue();
             int index = month -1;
 
             Set<Ticket> ticketSet = invoice.getTickets();

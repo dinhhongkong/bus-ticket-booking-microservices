@@ -61,8 +61,9 @@ public class UserAccountServiceImpl implements UserAccountService {
             throw new BadCredentialsException("Incorrect password");
         }
         Map<String, Object> claims = new HashMap<>();
-        claims.put("customerId", user.get().getUserId());
+        claims.put("id", user.get().getUserId());
         claims.put("username", user.get().getUsername());
+        claims.put("role", user.get().getRoleByRoleId().getRoleName());
         String accessToken = jwtTokenProvider.createToken(claims);
         return TokenResponse.builder()
                 .accessToken(accessToken)

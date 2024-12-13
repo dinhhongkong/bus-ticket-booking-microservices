@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public interface TicketMapper {
     @Mapping(source = "invoiceStatus", target = "invoice.status")
     @Mapping(source = "paymentMethod", target = "invoice.paymentMethod")
-    @Mapping(source = "invoiceCreationDate", target = "invoice.creationDate")
+    @Mapping(source = "invoiceCreationDate", target = "invoice.date")
     @Mapping(source = "dropOff", target = "dropOffPoint.officeName")
     @Mapping(source = "pickup", target = "pickupPoint.officeName")
     Ticket toEntity(TicketDto ticketDto);

@@ -31,23 +31,23 @@ public class Ticket {
     @Column(name = "description")
     private String description;
 
-    @Size(max = 100)
-    @NotNull
-    @Column(name = "full_name", nullable = false, length = 100)
-    private String fullName;
+//    @Size(max = 100)
+//    @NotNull
+//    @Column(name = "full_name", nullable = false, length = 100)
+//    private String fullName;
+//
+//    @Size(max = 13)
+//    @NotNull
+//    @Column(name = "phone_number", nullable = false, length = 13)
+//    private String phoneNumber;
+//
+//    @Size(max = 100)
+//    @Column(name = "email", length = 100)
+//    private String email;
 
-    @Size(max = 13)
-    @NotNull
-    @Column(name = "phone_number", nullable = false, length = 13)
-    private String phoneNumber;
 
-    @Size(max = 100)
-    @Column(name = "email", length = 100)
-    private String email;
-
-
-    @Column(name = "trip_id")
-    private Integer tripId;
+//    @Column(name = "trip_id")
+//    private Integer tripId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "invoice_id")
@@ -55,5 +55,9 @@ public class Ticket {
 
     @OneToMany(mappedBy = "ticket")
     private Set<TicketDetail> ticketDetails = new LinkedHashSet<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "trip_id")
+    private Trip trip;
 
 }

@@ -1,6 +1,7 @@
 package org.kong.paymentservice.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -20,8 +21,8 @@ public class Invoice {
     @Column(name = "invoice_id", nullable = false)
     private Integer id;
 
-    @Column(name = "creation_date")
-    private LocalDateTime creationDate;
+    @Column(name = "date")
+    private LocalDateTime date;
 
     @Size(max = 30)
     @Column(name = "payment_method", length = 30)
@@ -29,6 +30,20 @@ public class Invoice {
 
     @Column(name = "status")
     private Byte status;
+
+    @Size(max = 100)
+    @NotNull
+    @Column(name = "full_name", nullable = false, length = 100)
+    private String fullName;
+
+    @Size(max = 13)
+    @NotNull
+    @Column(name = "phone_number", nullable = false, length = 13)
+    private String phoneNumber;
+
+    @Size(max = 100)
+    @Column(name = "email", length = 100)
+    private String email;
 
     @Column(name = "user_id")
     private String userId;

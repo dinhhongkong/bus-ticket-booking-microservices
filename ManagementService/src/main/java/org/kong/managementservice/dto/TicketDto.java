@@ -6,6 +6,7 @@ import lombok.Value;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -24,7 +25,7 @@ public class TicketDto implements Serializable {
     String phoneNumber;
     @Size(max = 100)
     String email;
-    Instant invoiceCreationDate;
+    LocalDateTime invoiceCreationDate;
     String paymentMethod;
     Byte invoiceStatus;
     Set<String> ticketDetailSeatNames;

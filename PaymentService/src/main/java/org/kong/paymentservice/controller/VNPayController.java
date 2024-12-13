@@ -4,6 +4,7 @@ package org.kong.paymentservice.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.kong.paymentservice.config.VNPayConfig;
+import org.kong.paymentservice.dto.request.PaymentRequest;
 import org.kong.paymentservice.dto.request.PaymentTripRequest;
 import org.kong.paymentservice.service.VNPayService;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,13 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/payment")
 @RequiredArgsConstructor
-@CrossOrigin
 public class VNPayController {
     private final VNPayService vnPayService;
 
 
     @PostMapping("/VNPay")
-    public String submitOrder( @RequestBody PaymentTripRequest body){
+    public String submitOrder( @RequestBody PaymentRequest body){
         String portReact = "3000";
         String baseUrl = "http://localhost:3000/payment-status";
 //        String baseUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
