@@ -1,4 +1,4 @@
-## Link frontend repository using Next.js [Click here](https://github.com/dinhhongkong/bus-ticket-booking-next-js)
+## Link frontend repository using Next.js [Click here](https://github.com/dinhhongkong/bus-ticket-booking-next-js-frontend)
 
 ## Kiến trúc hệ thống Microservices
 <img title="a title" alt="Alt text" src="screenshot/architecture.png">
@@ -20,5 +20,13 @@
 
 •	__Reporting Service:__ Dịch vụ báo cáo chịu trách nhiệm tạo ra các báo cáo và thống kê từ dữ liệu vận hành. Reporting Service giúp ban lãnh đạo doanh nghiệp phân tích hoạt động kinh doanh và đưa ra quyết định dựa trên dữ liệu.
 
-•	__Database:__ Tất cả các dịch vụ microservice trong hệ thống đều tương tác với cơ sở dữ liệu để lưu trữ và truy xuất dữ liệu cần thiết. Mỗi dịch vụ dùng chung database (gọi là shared database).
+•	__AI Service:__ Dịch vụ AI chịu trách nhiệm xử lý và phản hồi các câu hỏi từ khách hàng thông qua chatbot. AI Service kết nối với LLM và phương pháp Retrieval-Augmented Generation (RAG) để tìm kiếm thông tin từ cơ sở dữ liệu và trả lời một cách tự nhiên, chính xác. Dịch vụ này hỗ trợ khách hàng tra cứu, giải đáp thắc mắc, cung cấp thông tin nhanh chóng về lộ trình hoặc các yêu cầu khác liên quan đến dịch vụ của nhà xe.	
+
+•	__MCP Server:__ Một chương trình nhỏ gọn được thiết kế để cung cấp cho LLM khả năng truy cập vào MySQL Database thông qua giao thức chuẩn hóa có tên là Model Context Protocol (MCP).	
+
+•	__LLM:__ Dịch vụ của OpenAI cung cấp mô hình ngôn ngữ lớn là GPT-4-mini để hỗ trợ tạo sinh câu trả lời, hỗ trợ giải đáp thắc mắc khách hàng.	
+
+•	__Qdrant Vector Database:__ Là cơ sở dữ liệu vector lưu trữ và truy vấn các vector nhúng từ thông tin chuyến đi và các dữ liệu liên quan. Qdrant giúp AI Service tìm kiếm nhanh chóng và hiệu quả những câu trả lời phù hợp với truy vấn của khách hàng. Qdrant Vector Database hoạt động bằng cách so sánh các vector để tìm kiếm thông tin tương tự nhất, hỗ trợ việc trả lời chính xác và cải thiện trải nghiệm chatbot.
+
+•	__MySQL Database:__ Tất cả các dịch vụ microservice trong hệ thống đều tương tác với cơ sở dữ liệu để lưu trữ và truy xuất dữ liệu cần thiết. Mỗi dịch vụ đều dùng chung database (gọi là shared database).
 
