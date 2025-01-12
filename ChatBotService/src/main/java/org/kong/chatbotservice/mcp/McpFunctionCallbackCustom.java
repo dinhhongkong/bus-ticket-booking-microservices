@@ -37,6 +37,7 @@ public class McpFunctionCallbackCustom implements FunctionCallback {
     public String call(String functionInput) {
         Map<String, Object> arguments = ModelOptionsUtils.jsonToMap(functionInput);
         System.out.println("-----------------CALL TOOL-----------------------");
+        System.out.println("functionInput: " + functionInput);
         System.out.println("name: " +  this.getName() + "  arguments:" + arguments);
         McpSchema.CallToolResult response = this.mcpClient.callTool(new McpSchema.CallToolRequest(this.getName(), arguments));
         System.out.println("-----------------------------------------");

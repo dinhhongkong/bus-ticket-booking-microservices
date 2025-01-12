@@ -104,9 +104,9 @@ public class ChatBotService {
         var systemMessage = new SystemPromptTemplate(PromptTemplate.PROMPT_SUPER)
                 .createMessage(Map.of("documents", documents ));
         messageList.add(systemMessage);
-        System.out.println("-----------------SYSTEM MESSAGES-------------------");
-        System.out.println(systemMessage);
-        System.out.println("-----------------SYSTEM MESSAGES-------------------");
+//        System.out.println("-----------------SYSTEM MESSAGES-------------------");
+//        System.out.println(systemMessage);
+//        System.out.println("-----------------SYSTEM MESSAGES-------------------");
         for (CustomMessage customMessage : messages) {
             if (customMessage.getRole().equals("user")) {
                 messageList.add(new UserMessage(customMessage.getContent()));

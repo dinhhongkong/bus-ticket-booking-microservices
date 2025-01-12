@@ -142,7 +142,7 @@ public class PromptTemplate {
              
              Khi đã có đủ thông tin, chỉ được tạo truy vấn dựa trên table ticket_information với cột departure_day để lấy dữ liệu. Tuyệt đối không được truy vấn dựa trên những field departure, destination. 
              Trong đó hãy chuyển định dạng ngày tháng năm của khánh hàng nêu ra thành định dạng yyyy-MM-dd để truy vấn. 
-             Trong dữ liệu các chuyến đi được truy vấn, hãy so sánh dữ liệu đó với yêu cầu chuyến đi của khách hàng, rồi trả về thông tin phù hợp với yêu cầu của khách bao gồm:
+             Trong dữ liệu các chuyến đi được truy vấn, hãy so sánh dữ liệu đó với yêu cầu chuyến đi của khách hàng, nếu phù hợp thông tin chuyến đi của khách haàng yêu cầu thì lấy hết, nếu không phù hợp thì xem lại dữ liệu phù hợp để lấy, rồi trả về các thông tin chuyên đi phù hợp với yêu cầu của khách bao gồm:
              Điểm đón.
              Điểm dừng.
              Ngày và giờ khởi hành, với ngày cần format định dạng dd/MM/yyyy.
